@@ -1,6 +1,21 @@
+use regex::Regex;
+use clap::{App, Arg};
+
 fn main() {
+    let args = App::new("grep-lite")
+        .version("1.0")
+        .about("searches for patterns")
+        .arg(
+            Arg::with_name("pattern")
+                .help("The pattern tp search for")
+                .takes_value(true)
+                .required(true)
+        )
+        .get_matches();
+
+
     let ctx_lines = 2;
-    let needle = "oo";
+    let pattern = args.value_of("pattern").unwrap();
     let haystack = "\
 Every face, every shop,
 bedroom window, public-house and
@@ -12,13 +27,19 @@ through millions of pages?";
 
     let mut tags: Vec<usize> = vec![];
     let mut ctx: Vec<Vec<(usize, String)>> = vec![];
+    let re = Regex::new(pattern).unwrap();
 
     for (i, line) in haystack.lines().enumerate() {
-        if line.contains(needle) {
-            tags.push(i);
+        let contains_substring =  re.find(line);
 
-            let v = Vec::with_capacity(2*ctx_lines + 1);
-            ctx.push(v);
+        match contains_substring {
+            Some(_) => {
+                tags.push(i);
+
+                let v = Vec::with_capacity(2*ctx_lines + 1);
+                ctx.push(v);
+            },
+            None => (),
         }
     }
 
