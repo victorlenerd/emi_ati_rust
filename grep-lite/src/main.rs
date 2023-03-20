@@ -29,13 +29,14 @@ fn main() {
 
     let f = File::open(input).unwrap();
     let reader = BufReader::new(f);
-    let lines = reader.lines();
+    let ref lines: Vec<String> = reader.lines().collect::<Result<_, _>>().unwrap();
     let mut tags: Vec<usize> = vec![];
     let mut ctx: Vec<Vec<(usize, String)>> = vec![];
     let re = Regex::new(pattern).unwrap();
+    let ilines = lines.into_iter();
 
-    for (i, line) in lines.enumerate() {
-        let _line = &line.unwrap();
+    for (i, line) in ilines.enumerate() {
+        let _line = &line;
         let contains_substring =  re.find(_line);
 
         match contains_substring {
@@ -53,11 +54,9 @@ fn main() {
         return;
     }
 
-    let f = File::open(input).unwrap();
-    let reader = BufReader::new(f);
-    let lines = reader.lines();
-    for (i, line) in lines.enumerate() {
-        let _line = &line.unwrap();
+    let ilines = lines.into_iter();
+    for (i, line) in ilines.enumerate() {
+        let _line = line;
         for (j, tag) in tags.iter().enumerate() {
             let lower_bound = tag.saturating_sub(ctx_lines);
             let upper_bound = tag + ctx_lines;
