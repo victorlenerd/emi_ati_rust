@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["filep"];
+window.ALL_CRATES = ["file_simulator","filep"];

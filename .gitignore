@@ -14,5 +14,5 @@ Cargo.lock
 
 .idea
 
-filep/.idea
-filep/target
+file_simulator/.idea
+file_simulator/target
