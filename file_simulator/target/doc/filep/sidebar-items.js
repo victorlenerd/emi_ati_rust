@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["FileState","Representing a “file” which probably lives on a file system."]],"fn":[["main",""]],"struct":[["File",""]],"trait":[["Read","Read trait"]]};
